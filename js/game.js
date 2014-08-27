@@ -10,7 +10,17 @@
   achievements.addResearch(research);
   achievements.addWorkers(workers);
   
-  var app = angular.module('particleClicker', []);
+  var app = angular.module('particleClicker', ['pascalprecht.translate']);
+
+  app.config(function($translateProvider) {
+//     $translateProvider.translations('en', {
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'languages/',
+      suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+//    $translateProvider.useCookieStorage();
+  });
 
   app.filter('niceNumber', ['$filter', function($filter) {
     return Helpers.formatNumberPostfix;
@@ -27,6 +37,12 @@
       return items.slice().reverse();
     };
   }]);
+
+  app.controller('TranslateController', function($translate, $scope) {
+    $scope.changeLanguage = function (langKey) {
+      $translate.use(langKey);
+    };
+  });
 
   app.controller('DetectorController', function() {
     this.click = function() {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="particleClicker">
   <head>
-    <title>Particle Clicker</title>
+    <title><span ng-cloak>{{ 'TITLE' | translate }}</span></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,14 +29,15 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">Mobile version</h4>
+            <h4 class="modal-title"><span ng-cloak>{{ 'MOBILE' | translate }}</span></h4>
           </div>
           <div class="modal-body">
             <p>
-              You seem to be using a mobile device. The experience with this website might be very unpleasant for you. This is why we made a mobile version of Particle Clicker.
+              <span ng-cloak>{{ 'MOBILE_WARNING' | translate }}</span>
             </p>
             <p class="bg-warning">
-              This is an early release for you to play with. It's best played in landscape mode. If you find any bugs please report them on our <a href="https://github.com/particle-clicker/particle-clicker/issues"><i class="fa fa-github"></i> issue tracker</a>.
+              <span ng-cloak>{{ 'BUGREPORT' | translate }} </span>
+              <a href="https://github.com/particle-clicker/particle-clicker/issues"><i class="fa fa-github"></i><span ng-cloak> {{ 'ISSUE' | translate }}</span></a>.
             </p>
             <p class="small">Hint: If you use the "Save to home screen" function of your browser, you can even play the game in full screen mode.</p>
           </div>
@@ -52,24 +53,33 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#" data-toggle="modal" data-target="#myModal">Particle Clicker</a>
+          <a class="navbar-brand" href="#" data-toggle="modal" data-target="#myModal"><span ng-cloak>{{ 'TITLE' | translate }}</span></span></a>
         </div>
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="#" data-toggle="modal" data-target="#achievements-modal"><i class="fa fa-trophy"></i> Achievements</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#achievements-modal"><i class="fa fa-trophy"></i><span ng-cloak> {{ 'ACHIEVEMENTS' | translate }}</span></a></li>
+
           <li class="dropdown" ng-controller="SaveController">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Last saved: <span ng-cloak>{{ lastSaved | date : 'H:mm:ss' }}</span><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-cloak>{{ 'LAST_SAVED' | translate }}: {{ lastSaved | date : 'H:mm:ss' }}</span><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#" ng-click="saveNow()"><i class="fa fa-save"></i> Save now</a></li>
+              <li><a href="#" ng-click="saveNow()"><i class="fa fa-save"></i><span ng-cloak> {{ 'SAVE_NOW' | translate }}</span></a></li>
               <li class="divider"></li>              
-              <li><a href="#" ng-click="restart()"><i class="fa fa-refresh"></i> Restart</a></li>
+              <li><a href="#" ng-click="restart()"><i class="fa fa-refresh"></i><span ng-cloak> {{ 'RESTART' | translate }}</span></a></li>
             </ul>
           </li>
-          <li><a href="#" data-toggle="modal" data-target="#myModal">About</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#myModal"><span ng-cloak>{{ 'ABOUT' | translate }}</span></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="https://github.com/particle-clicker/particle-clicker/" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+          <li class="dropdown" ng-controller="TranslateController">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-language"></i><span ng-cloak> {{ 'LANGUAGES' | translate }}</span><span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#" ng-click="changeLanguage('en')"><span ng-cloak>{{ 'BUTTON_TEXT_EN' | translate }}</span></a></li>
+              <li class="divider"></li>              
+              <li><a href="#" ng-click="changeLanguage('hu')"><span ng-cloak>{{ 'BUTTON_TEXT_HU' | translate }}</span></a></li>
+            </ul>
+          </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Share <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-cloak>{{ 'SHARE' | translate }} </span><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcern.ch%2Fparticle-clicker&t=Particle%20Clicker" target="_blank" title="Share on Facebook"><i class="fa fa-facebook"></i> Facebook</a></li>
               <li><a href="https://twitter.com/share?url=http%3A%2F%2Fcern.ch%2Fparticle-clicker&t=Particle%20Clicker&text=Particle%20Clicker%3A%20An%20addictive%20incremental%20game%20that%20was%20made%20during%20the%20CERN%20Webfest%202014.%20%23particleclicker" target="_blank" title="Share on Twitter"><i class="fa fa-twitter"></i> Twitter</a></li>
@@ -83,17 +93,17 @@
 
     <div class="container-fluid">
       <div class="col-xs-3 scrollable" id="Research" ng-controller="ResearchController as rc">
-        <h3><span class="glyphicon glyphicon-cog"></span> Research</h3>
+        <h3><span class="glyphicon glyphicon-cog"></span> <span ng-cloak>{{ 'RESEARCH' | translate }}</span></h3>
         <hr>
         <ul class="media-list" ng-cloak>
           <li class="media" ng-repeat="r in rc.research" ng-show="r.is_visible()">
             <img ng-show="r.level > 0" class="pull-left" class="media-object" src="{{ r.image }}" alt="">
             <img ng-hide="r.level > 0" class="pull-left" class="media-object" src="assets/icons/png/unknown.png" alt="">
             <div class="media-body">
-              <h4 class="media-heading">{{ r.level > 0 ? r.name : '?????' }} <span ng-show="r.level > 0" class="badge">Level {{ r.level }}</span></h4>
-              <p ng-show="r.level > 0">{{ r.description }} Researching it will give you {{ r.reputation | niceNumber }} reputation.</p>
+              <h4 class="media-heading">{{ r.level > 0 ? r.name : '?????' }} <span ng-show="r.level > 0" class="badge"><span ng-cloak>{{ 'LEVEL' | translate }} {{ r.level }}</span></span></h4>
+              <p ng-show="r.level > 0"><span ng-cloak>{{ r.description }} {{ 'RESEARCH_AWARD' | translate }} {{ r.reputation | niceNumber }} {{ 'REPUTATION_' | translate }}{{ 'RESEARCH_AWARD2' | translate }}.</span></p>
               <div class="btn-group">
-              <button class="btn btn-primary" ng-disabled="!r.is_available()" ng-click="rc.doResearch(r)">Research <small>({{ r.cost | niceNumber }} data)</small></button>
+              <button class="btn btn-primary" ng-disabled="!r.is_available()" ng-click="rc.doResearch(r)"><span ng-cloak>{{ 'RESEARCH' | translate }} <small>({{ r.cost | niceNumber }} data)</small></span></button>
               <button class="btn btn-info" ng-show="r.level > 0" ng-click="r.showInfo()"><span class="glyphicon glyphicon-exclamation-sign"></span></button>
             </div>
             </div>
@@ -107,27 +117,27 @@
         <button class="pull-right btn btn-info" ng-click="lc.showDetectorInfo()"><span class="glyphicon glyphicon-info-sign"></span></button>
         <div id="detector" ng-controller="DetectorController as dc">
           <canvas id="detector-core" width="400" height="400">
-            Your detector. Click on it to generate events.
+            <span ng-cloak>{{ 'DETECTOR' | translate }}</span>
           </canvas>
           <canvas ng-click="dc.click()" id="detector-events" width="400" height="400" class="prevent-select">
-            Your detector. Click on it to generate events.
+            <span ng-cloak>{{ 'DETECTOR' | translate }}</span>
           </canvas>
         </div>
         <div class="row" id="Status" ng-cloak>
           <div class="col-xs-4 text-center">
-            <strong>Data</strong>
+            <strong><span ng-cloak>{{ 'DATA' | translate }}</span></strong>
             <br>
             {{ lc.lab.data | niceNumber }}
             <div class="update-value" id="update-data"></div>
           </div>
           <div class="col-xs-4 text-center">
-            <strong>Reputation</strong>
+            <strong><span ng-cloak>{{ '_REPUTATION' | translate }}</span></strong>
             <br>
             {{ lc.lab.reputation | niceNumber }}
             <div class="update-value" id="update-reputation"></div>
           </div>
           <div class="col-xs-4">
-            <span class="text-center"><strong>Funding</strong></span>
+            <span class="text-center"><strong><span ng-cloak>{{ 'FUNDING' | translate }}</span></strong></span>
             <br>
             {{ lc.lab.money | currency }}
             <div class="update-value" id="update-funding"></div>
@@ -136,28 +146,28 @@
       </div>
 
       <div class="col-xs-2 scrollable" id="HR" ng-controller="HRController as hrc">
-        <h3><span class="glyphicon glyphicon-user"></span> HR</h3>
+        <h3><span class="glyphicon glyphicon-user"></span><span ng-cloak> {{ 'HR' | translate }}</span></h3>
         <hr>
         <ul class="media-list" ng-cloak>
           <li class="media" ng-repeat="w in hrc.workers" ng-show="w.is_visible()">
             <div class="media-body">
               <h4 class="media-heading">{{ w.name }} <span ng-show="w.hired > 0" class="badge">{{ w.hired | niceNumber }}</span></h4>
-              <p ng-show="w.hired > 0">{{ w.description }} They produce {{ w.rate | niceNumber }} data per second.</p>
-              <button class="btn btn-primary" ng-disabled="!w.is_available()" ng-click="hrc.hire(w)">Hire <small>({{ w.cost | currency }})</small></button>
+              <p ng-show="w.hired > 0"><span ng-cloak>{{ w.description }} {{ 'PRODUCE' | translate }} {{ w.rate | niceNumber }} {{ 'DPS' | translate }}{{ 'PRODUCE2' | translate }}.</span></p>
+              <button class="btn btn-primary" ng-disabled="!w.is_available()" ng-click="hrc.hire(w)"><span ng-cloak>{{ 'HIRE' | translate }} <small>({{ w.cost | currency }})</small></span></button>
             </div>
           </li>
         </ul>
       </div>
 
       <div class="col-xs-2 scrollable" id="Upgrades" ng-controller="UpgradesController as uc">
-        <h3><span class="glyphicon glyphicon-wrench"></span> Upgrades</h3>
+        <h3><span class="glyphicon glyphicon-wrench"></span><span ng-cloak> {{ 'UPGRADES' | translate }}</span></h3>
         <hr>
         <ul class="media-list" ng-cloak>
           <li class="media" ng-repeat="u in uc.upgrades" ng-show="u.is_visible()">
             <div class="media-body">
               <h4 class="media-heading">{{ u.name }}</h4>
               <p>{{ u.description }}</p>
-              <button class="btn btn-primary" ng-disabled="!u.is_available()" ng-click="uc.upgrade(u)">Buy <small>({{ u.cost | currency }})</small></button>
+              <button class="btn btn-primary" ng-disabled="!u.is_available()" ng-click="uc.upgrade(u)"><span ng-cloak>{{ 'BUY' | translate }} <small>({{ u.cost | currency }})</small></span></button>
             </div>
           </li>
         </ul>
@@ -168,7 +178,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><span ng-cloak>{{ 'CLOSE' | translate }}</span></span></button>
             <h4 class="modal-title" id="infoBoxLabel"></h4>
           </div>
           <div class="modal-body"></div>
@@ -180,11 +190,11 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="achievements-label">Achievements</h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><span ng-cloak>{{ 'CLOSE' | translate }}</span></span></button>
+            <h4 class="modal-title" id="achievements-label"><span ng-cloak>{{ 'ACHIEVEMENTS' | translate }}</span></h4>
           </div>
           <div class="modal-body">
-            <p class="text-center"><strong>Progress</strong> <span class="label label-info">{{ ac.achievements.length }} / {{ ac.achievementsAll.length }}</span></p>
+            <p class="text-center"><strong><span ng-cloak>{{ 'PROGRESS' | translate }}</span></strong> <span class="label label-info">{{ ac.achievements.length }} / {{ ac.achievementsAll.length }}</span></p>
             <ul class="list-group">
               <li class="list-group-item" ng-repeat="a in ac.achievements | reverse">
                 <span class="glyphicon {{ a.icon }}"></span>
@@ -204,17 +214,17 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">Particle Clicker</h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><span ng-cloak>{{ 'CLOSE' | translate }}</span></span></button>
+            <h4 class="modal-title" id="myModalLabel"><span ng-cloak>{{ 'TITLE' | translate }}</span></h4>
           </div>
           <div class="modal-body">
-            <h4>About</h4>
-            <p class="small">Version: 0.3.1 (mobile-beta)</p>
-            <p class="small bg-warning">This is a pre-release. If you encounter any bugs please report them using <a href="https://github.com/particle-clicker/particle-clicker/issues"><i class="fa fa-github"></i> GitHub issues</a>. This game runs best in landscape mode. Performance of the event display may rely heavily on your hardware.</p>
-            <p>Particle Clicker is a game that was made during the <a href="https://webfest.web.cern.ch">CERN Webfest 2014</a>. The idea is borrowed from <a href="http://orteil.dashnet.org/cookieclicker/">Cookie Clicker</a>, an amazing and addictive cookie-themed game.</p>
+            <h4><span ng-cloak>{{ 'ABOUT' | translate }}</span></h4>
+            <p class="small"><span ng-cloak>{{ 'VERSION' | translate }}</span>: 0.3.1 (mobile-beta)</p>
+            <p class="small bg-warning"><span ng-cloak>{{ 'PRERELEASE' | translate }} <a href="https://github.com/particle-clicker/particle-clicker/issues"><i class="fa fa-github"></i> GitHub issues</a>. {{ 'LANDSCAPE' | translate }}</span></p>
+            <p><span ng-cloak>{{ 'DESC1' | translate }} <a href="https://webfest.web.cern.ch">CERN Webfest 2014</a>{{ 'DESC2' | translate }} <a href="http://orteil.dashnet.org/cookieclicker/">Cookie Clicker</a>{{ 'DESC3' | translate }}.</span></p>
             <img width="200" src="http://www.citizencyberscience.net/wiki/images/1/1b/Cernwebfest.png" alt="">
-            <h5>Libraries</h5>
-            <p>This game is realised using a few libraries. Those are</p>
+            <h5><span ng-cloak>{{ 'LIBRARIES' | translate }}</span></h5>
+            <p><span ng-cloak>{{ 'LIBRARIES_DESC' | translate }}</span></p>
             <ul>
               <li><a href="http://angularjs.org">AngularJS</a></li>
               <li><a href="http://getbootstrap.com/">Bootstrap</a></li>
@@ -223,8 +233,8 @@
               <li><a href="http://imulus.github.io/retinajs/">retina.js</a></li>
               <li><a href="https://github.com/ftlabs/fastclick">fastclick.js</a></li>
             </ul>
-            <h5>Authors</h5>
-            <p>Feel free to get in touch with us via GitHub or by shooting us an email. Our addresses all follow the pattern name.surname@cern.ch.</p>
+            <h5><span ng-cloak>{{ 'AUTHORS' | translate }}</span></h5>
+            <p><span ng-cloak>{{ 'ADDRESSES' | translate }}</span></p>
             <ul>
               <li><a href="https://github.com/gbiro">Gabor Biro</a></li>
               <li><a href="https://github.com/ibab">Igor Babuschkin</a></li>
@@ -232,8 +242,8 @@
               <li><a href="https://github.com/ntadej">Tadej Novak</a></li>
               <li><a href="https://github.com/zhangjiannan">Jiannan Zhang</a></li>
             </ul>
-            <h5>Source</h5>
-            <p>The source code of this game is freely available on <a href="https://github.com/particle-clicker/particle-clicker"><i class="fa fa-github"></i> GitHub</a> under the terms of an MIT license.</p>
+            <h5><span ng-cloak>{{ 'SOURCE' | translate }}</span></h5>
+            <p><span ng-cloak>{{ 'SOURCE_CODE' | translate }} <a href="https://github.com/particle-clicker/particle-clicker"><i class="fa fa-github"></i> GitHub</a>{{ 'LICENCE' | translate }}.</span></p>
           </div>
         </div>
       </div>
@@ -245,6 +255,11 @@
     <script src="js/external/jquery.cookie-1.4.1.min.js"></script>
     <script src="js/external/retina.js"></script>
     <script src="js/external/fastclick.js"></script>
+    <script src="js/external/angular-translate.js"></script>
+    <script src="js/external/angular-translate-loader-static-files.min.js"></script>
+    <script src="js/external/angular-translate-storage-cookie.min.js"></script>
+    <script src="js/external/angular-translate-storage-local.min.js"></script>
+    
 
     <script src="js/storage.js"></script>
     <script src="js/helpers.js"></script>
